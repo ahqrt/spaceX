@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { View, SafeAreaView, FlatList } from "react-native";
 import useSwr from "swr";
 
@@ -9,8 +9,20 @@ import { getLaunches } from "../fetcher";
 const Home = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<any>({});
+  const allDatas = useRef<any[]>([])
 
   const { data, isLoading, error } = useSwr(['/lunchers', page, query], () => getLaunches(page, query))
+
+  const allData = useMemo(() => {
+    if (allDatas.current.length) {
+      if (data?.docs?.length) {
+        allDatas.current = [...allDatas.current, ...data.docs]
+      }
+    } else {
+      allDatas.current = data?.docs || []
+    }
+    return allDatas.current
+  }, [data])
 
   if (data) {
     console.log(data)
@@ -28,7 +40,7 @@ const Home = () => {
       <View style={{ flex: 1 }}>
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={data?.docs}
+            data={allData}
             renderItem={({ item }) => <Card data={item} />}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}

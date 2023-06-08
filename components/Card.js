@@ -26,7 +26,7 @@ const Card = ({ data }) => {
         }}
       >
         <Image
-          source={data.image}
+          source={data.links.patch.small}
           resizeMode="cover"
           style={{
             width: "100%",
