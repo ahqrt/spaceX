@@ -32,7 +32,15 @@ const Home = () => {
   }
 
   const handleSearch = (value) => {
+    allDatas.current = []
+    console.log('value', value);
 
+    setPage(1)
+    if (value) {
+      setQuery({ name: value })
+    } else {
+      setQuery({})
+    }
   };
 
   const handleLoadMore = () => {

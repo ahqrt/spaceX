@@ -15,6 +15,7 @@ type CircleButtonProps = StyleProps & {
 }
 
 type RectButtonProps = StyleProps & {
+	text: string
 	minWidth: number
 	fontSize: number
 	handlePress?: (event: GestureResponderEvent) => void
@@ -41,7 +42,7 @@ export const CircleButton: FC<CircleButtonProps> = ({ imgUrl, handlePress, ...pr
 	)
 }
 
-export const RectButton: FC<RectButtonProps> = ({ minWidth, fontSize, handlePress, ...props }) => {
+export const RectButton: FC<RectButtonProps> = ({ text, minWidth, fontSize, handlePress, ...props }) => {
 	return (
 		<TouchableOpacity
 			style={{
@@ -61,7 +62,7 @@ export const RectButton: FC<RectButtonProps> = ({ minWidth, fontSize, handlePres
 					textAlign: 'center'
 				}}
 			>
-				LEARN MORE
+				{text}
 			</Text>
 		</TouchableOpacity>
 	)

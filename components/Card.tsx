@@ -58,6 +58,7 @@ const Card = ({ data }) => {
 				>
 					<LunchState success={data.success} />
 					<RectButton
+						text='LEARN MORE'
 						minWidth={120}
 						fontSize={SIZES.font}
 						handlePress={() => navigation.navigate('Details', { data })}

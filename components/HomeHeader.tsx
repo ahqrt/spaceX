@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TextInput } from "react-native";
 
 import { COLORS, FONTS, SIZES, assets } from "../constants";
+import { RectButton } from "./Button";
 
 const HomeHeader = ({ onSearch }) => {
+  const [name, setName] = useState("");
   return (
     <View
       style={{
@@ -54,9 +56,10 @@ const HomeHeader = ({ onSearch }) => {
           />
           <TextInput
             placeholder=""
+            onChangeText={setName}
             style={{ flex: 1 }}
-            onChangeText={onSearch}
           />
+          <RectButton text='search' minWidth={100} handlePress={() => onSearch(name)} fontSize={SIZES.font} backgroundColor={COLORS.search} />
         </View>
       </View>
     </View>
