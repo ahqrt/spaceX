@@ -54,7 +54,7 @@ const Home = () => {
   }, [data]);
 
   if (data) {
-    // console.log('data', data);
+    console.log('data', data, data.nextPage);
 
     if (data.nextPage === null) {
       hasMore.current = false
