@@ -43,7 +43,7 @@ const Card = ({ data }) => {
 			<View style={{ width: '100%', padding: SIZES.font }}>
 				<Title
 					title={data.name}
-					subTitle={data.date_local}
+					subTitle={data.date_utc}
 					titleSize={SIZES.large}
 					subTitleSize={SIZES.small}
 				/>

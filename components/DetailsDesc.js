@@ -21,7 +21,7 @@ const DetailsDesc = ({ data }) => {
 			>
 				<NFTTitle
 					title={data.name}
-					subTitle={data.date_local}
+					subTitle={data.date_utc}
 					titleSize={SIZES.extraLarge}
 					subTitleSize={SIZES.font}
 				/>

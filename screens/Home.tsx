@@ -15,17 +15,17 @@ const Home = () => {
   const { data, isLoading, error } = useSwr(['/lunchers', page, query], () => getLaunches(page, query))
 
   const allData = useMemo(() => {
-    if (allDatas.current.length) {
-      if (data?.docs?.length) {
-        allDatas.current = [...allDatas.current, ...data.docs]
-      }
-    } else {
-      allDatas.current = data?.docs || []
+    if (data?.docs?.length) {
+      allDatas.current = [...allDatas.current, ...data.docs];
+    } else if (allDatas.current.length === 0) {
+      allDatas.current = [];
     }
-    return allDatas.current
-  }, [data])
+    return allDatas.current;
+  }, [data]);
 
   if (data) {
+    console.log('data', data);
+
     if (data.nextPage === null) {
       hasMore.current = false
     }
