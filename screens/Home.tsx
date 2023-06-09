@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useReducer, useRef, useState } from "react";
 import { View, SafeAreaView, FlatList, ActivityIndicator } from "react-native";
 import useSwr from "swr";
 
@@ -6,13 +6,43 @@ import { Card, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS } from "../constants";
 import { getLaunches } from "../fetcher";
 
+
+const initilaQuery = {
+  success: undefined,
+  date_utc: {
+    $gte: undefined,
+    $lte: undefined
+  },
+  $text: {
+    $search: 'crs'
+  },
+}
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'changeSate':
+      return {
+        ...state,
+        ...action.payload
+      }
+
+    default:
+      return state
+  }
+}
+
+
+
+
 const Home = () => {
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState<any>({});
+  const [query, setQuery] = useReducer<any>(reducer, {});
   const allDatas = useRef<any[]>([])
+  const [sortType, setSortType] = useState('desc')
   const hasMore = useRef(true)
 
-  const { data, isLoading, error } = useSwr(['/lunchers', page, query], () => getLaunches(page, query))
+  const { data, isLoading, error } = useSwr(['/lunchers', page, sortType, query], () => getLaunches(page, sortType, query))
 
   const allData = useMemo(() => {
     if (data?.docs?.length) {
@@ -24,7 +54,7 @@ const Home = () => {
   }, [data]);
 
   if (data) {
-    console.log('data', data);
+    // console.log('data', data);
 
     if (data.nextPage === null) {
       hasMore.current = false
