@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState } from "react";
-import { View, SafeAreaView, FlatList } from "react-native";
+import { useMemo, useRef, useState } from "react";
+import { View, SafeAreaView, FlatList, ActivityIndicator } from "react-native";
 import useSwr from "swr";
 
 import { Card, HomeHeader, FocusedStatusBar } from "../components";
@@ -10,6 +10,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<any>({});
   const allDatas = useRef<any[]>([])
+  const hasMore = useRef(true)
 
   const { data, isLoading, error } = useSwr(['/lunchers', page, query], () => getLaunches(page, query))
 
@@ -25,14 +26,32 @@ const Home = () => {
   }, [data])
 
   if (data) {
-    console.log(data)
+    if (data.nextPage === null) {
+      hasMore.current = false
+    }
   }
 
   const handleSearch = (value) => {
 
   };
 
-  if (isLoading) return null
+  const handleLoadMore = () => {
+    if (hasMore.current) {
+      setPage((prev) => prev + 1);
+    }
+  }
+
+  const renderFooter = () => {
+    if (!isLoading) {
+      return null;
+    }
+
+    return (
+      <View style={{ paddingVertical: 20 }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -45,6 +64,9 @@ const Home = () => {
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={renderFooter}
           />
         </View>
 
