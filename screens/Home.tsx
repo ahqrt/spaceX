@@ -67,6 +67,7 @@ const Home = () => {
             onEndReached={handleLoadMore}
             onEndReachedThreshold={0.5}
             ListFooterComponent={renderFooter}
+            stickyHeaderIndices={[0]}
           />
         </View>
 

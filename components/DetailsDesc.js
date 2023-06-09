@@ -5,7 +5,8 @@ import { LunchState, NFTTitle } from './SubInfo'
 import { COLORS, SIZES, FONTS } from '../constants'
 
 const DetailsDesc = ({ data }) => {
-	const [text, setText] = useState(data.description.slice(0, 100))
+	const [text, setText] = useState(data.details.slice(0, 100))
+	const [hasMore, setHasMore] = useState(data.details.length > 100)
 	const [readMore, setReadMore] = useState(false)
 
 	return (
@@ -20,12 +21,12 @@ const DetailsDesc = ({ data }) => {
 			>
 				<NFTTitle
 					title={data.name}
-					subTitle={data.creator}
+					subTitle={data.date_local}
 					titleSize={SIZES.extraLarge}
 					subTitleSize={SIZES.font}
 				/>
 
-				<LunchState price={data.price} />
+				<LunchState success={data.success} />
 			</View>
 
 			<View style={{ marginVertical: SIZES.extraLarge * 1.5 }}>
@@ -52,25 +53,29 @@ const DetailsDesc = ({ data }) => {
 						}}
 					>
 						{text}
-						{!readMore && '...'}
-						<Text
-							style={{
-								color: COLORS.primary,
-								fontSize: SIZES.small,
-								fontFamily: FONTS.semiBold
-							}}
-							onPress={() => {
-								if (!readMore) {
-									setText(data.description)
-									setReadMore(true)
-								} else {
-									setText(data.description.slice(0, 100))
-									setReadMore(false)
-								}
-							}}
-						>
-							{readMore ? ' Show Less' : ' Read More'}
-						</Text>
+						{hasMore && (
+							<>
+								{!readMore && '...'}
+								<Text
+									style={{
+										color: COLORS.primary,
+										fontSize: SIZES.small,
+										fontFamily: FONTS.semiBold
+									}}
+									onPress={() => {
+										if (!readMore) {
+											setText(data.details)
+											setReadMore(true)
+										} else {
+											setText(data.details.slice(0, 100))
+											setReadMore(false)
+										}
+									}}
+								>
+									{readMore ? ' Show Less' : ' Read More'}
+								</Text>
+							</>
+						)}
 					</Text>
 				</View>
 			</View>
