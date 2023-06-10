@@ -10,7 +10,7 @@ export async function getLaunches(page: number, sortType: string = '', query: an
 	const options = {
 		page,
 		limit,
-		select: ['id', 'name', 'date_utc', 'success', 'links', 'page', 'nextPage']
+		// select: ['id', 'name', 'date_utc', 'success', 'links', 'page', 'nextPage', 'details']
 	}
 
 	if (sortType) {

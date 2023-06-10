@@ -3,14 +3,18 @@ import { View, Text, Image, TextInput } from "react-native";
 
 import { COLORS, FONTS, SIZES, assets } from "../constants";
 import { RectButton } from "./Button";
+import { useNavigation } from "@react-navigation/native";
 
-const HomeHeader = ({ onSearch }) => {
+const HomeHeader = ({ onSearch, onFilter }) => {
   const [name, setName] = useState("");
+  const navigation = useNavigation()
+
   return (
     <View
       style={{
         backgroundColor: COLORS.primary,
         padding: SIZES.font,
+        paddingRight: SIZES.base,
       }}
     >
 
@@ -37,10 +41,10 @@ const HomeHeader = ({ onSearch }) => {
         </Text>
       </View>
 
-      <View style={{ marginTop: SIZES.font }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: SIZES.font }}>
         <View
           style={{
-            width: "100%",
+            flex: 1,
             borderRadius: SIZES.font,
             backgroundColor: COLORS.gray,
             flexDirection: "row",
@@ -59,8 +63,9 @@ const HomeHeader = ({ onSearch }) => {
             onChangeText={setName}
             style={{ flex: 1 }}
           />
-          <RectButton text='search' minWidth={100} handlePress={() => onSearch(name)} fontSize={SIZES.font} backgroundColor={COLORS.search} />
         </View>
+        <RectButton text='filter' minWidth={60} marginLeft={10} handlePress={onFilter} fontSize={SIZES.font} backgroundColor={COLORS.filter} />
+        <RectButton text='search' minWidth={100} handlePress={() => onSearch(name)} fontSize={SIZES.font} backgroundColor={COLORS.search} />
       </View>
     </View>
   );

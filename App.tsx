@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { useFonts } from "expo-font";
 import Home from './screens/Home';
 import Details from './screens/Detais';
+import Search from './components/Search/Search';
 
 const theme = {
   ...DefaultTheme,

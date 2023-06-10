@@ -1,10 +1,11 @@
 import { useMemo, useReducer, useRef, useState } from "react";
-import { View, SafeAreaView, FlatList, ActivityIndicator } from "react-native";
+import { View, SafeAreaView, FlatList, ActivityIndicator, Modal } from "react-native";
 import useSwr from "swr";
 
 import { Card, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS } from "../constants";
 import { getLaunches } from "../fetcher";
+import Search, { SearchContent } from "../components/Search/Search";
 
 
 const initilaQuery = {
@@ -19,28 +20,20 @@ const initilaQuery = {
 }
 
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'changeSate':
-      return {
-        ...state,
-        ...action.payload
-      }
-
-    default:
-      return state
-  }
-}
-
-
-
-
 const Home = () => {
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useReducer<any>(reducer, {});
+  const [query, setQuery] = useState<any>({});
   const allDatas = useRef<any[]>([])
   const [sortType, setSortType] = useState('desc')
   const hasMore = useRef(true)
+  const [openModel, setOpenModel] = useState(false)
+
+  const searchContent = useRef<SearchContent>({
+    startTime: undefined,
+    endTime: undefined,
+    lunchState: 'all',
+    sortType: 'asc',
+  })
 
   const { data, isLoading, error } = useSwr(['/lunchers', page, sortType, query], () => getLaunches(page, sortType, query))
 
@@ -54,26 +47,57 @@ const Home = () => {
   }, [data]);
 
   if (data) {
-    console.log('data', data, data.nextPage);
+    // console.log('data', data, data.nextPage);
 
     if (data.nextPage === null) {
       hasMore.current = false
+    } else {
+      hasMore.current = true
     }
+
   }
 
   const handleSearch = (value) => {
     allDatas.current = []
-    console.log('value', value);
-
+    console.log('value', value, searchContent.current);
     setPage(1)
-    if (value) {
-      setQuery({ name: value })
-    } else {
-      setQuery({})
+    let query = {}
+    if (searchContent.current.startTime && searchContent.current.endTime) {
+      query = {
+        date_utc: {
+          $gte: searchContent.current.startTime,
+          $lte: searchContent.current.endTime
+        }
+      }
     }
+    if (searchContent.current.lunchState !== 'all') {
+      query = {
+        ...query,
+        success: searchContent.current.lunchState === 'success'
+      }
+    }
+
+    if (value) {
+      query = {
+        ...query,
+        $text: {
+          $search: value
+        }
+      }
+    }
+
+    if (searchContent.current.sortType !== sortType) {
+      setSortType(searchContent.current.sortType)
+    }
+
+    console.log('query', query);
+    setQuery(query)
   };
 
   const handleLoadMore = () => {
+    if (isLoading) {
+      return
+    }
     if (hasMore.current) {
       setPage((prev) => prev + 1);
     }
@@ -101,7 +125,7 @@ const Home = () => {
             renderItem={({ item }) => <Card data={item} />}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
+            ListHeaderComponent={<HomeHeader onSearch={handleSearch} onFilter={() => setOpenModel(true)} />}
             onEndReached={handleLoadMore}
             onEndReachedThreshold={0.5}
             ListFooterComponent={renderFooter}
@@ -124,6 +148,25 @@ const Home = () => {
           <View style={{ flex: 1, backgroundColor: COLORS.white }} />
         </View>
       </View>
+
+
+      {/* filter model */}
+      <Modal
+        visible={openModel}
+        transparent={true}
+        animationType='fade'
+      >
+        <Search
+          initialState={searchContent.current}
+          onSearch={(val) => {
+            console.log('val', val);
+            setOpenModel(false)
+            searchContent.current = val
+          }} />
+
+
+      </Modal>
+
     </SafeAreaView>
   );
 };

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, Image, GestureResponderEvent, StyleProp, ViewStyle, ImageSourcePropType } from 'react-native'
+import { TouchableOpacity, Text, Image, GestureResponderEvent, StyleProp, ViewStyle, ImageSourcePropType, ColorValue } from 'react-native'
 
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants'
 import { FC } from 'react'
@@ -12,6 +12,8 @@ type StyleProps = {
 type CircleButtonProps = StyleProps & {
 	imgUrl: ImageSourcePropType
 	handlePress?: (event: GestureResponderEvent) => void
+	relative?: boolean
+	bgColor?: ColorValue
 }
 
 type RectButtonProps = StyleProps & {
@@ -21,14 +23,14 @@ type RectButtonProps = StyleProps & {
 	handlePress?: (event: GestureResponderEvent) => void
 }
 
-export const CircleButton: FC<CircleButtonProps> = ({ imgUrl, handlePress, ...props }) => {
+export const CircleButton: FC<CircleButtonProps> = ({ imgUrl, handlePress, relative, bgColor, ...props }) => {
 	return (
 		<TouchableOpacity
 			style={{
 				width: 40,
 				height: 40,
-				backgroundColor: COLORS.white,
-				position: 'absolute',
+				backgroundColor: bgColor ? bgColor : COLORS.white,
+				position: relative ? 'relative' : 'absolute',
 				borderRadius: SIZES.extraLarge,
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -50,6 +52,37 @@ export const RectButton: FC<RectButtonProps> = ({ text, minWidth, fontSize, hand
 				padding: SIZES.small,
 				borderRadius: SIZES.extraLarge,
 				minWidth: minWidth,
+				justifyContent: 'center',
+				alignItems: 'center',
+				...props
+			}}
+			onPress={handlePress}
+		>
+			<Text
+				style={{
+					fontFamily: FONTS.semiBold,
+					fontSize: fontSize,
+					color: COLORS.white,
+					textAlign: 'center'
+				}}
+			>
+				{text}
+			</Text>
+		</TouchableOpacity>
+	)
+}
+
+export const NoStyleButton: FC<RectButtonProps> = ({ text, minWidth, fontSize, handlePress, ...props }) => {
+	return (
+		<TouchableOpacity
+			style={{
+				padding: SIZES.small,
+				borderRadius: SIZES.extraLarge,
+				borderColor: COLORS.white,
+				borderWidth: 1,
+				minWidth: minWidth,
+				justifyContent: 'center',
+				alignItems: 'center',
 				...props
 			}}
 			onPress={handlePress}

@@ -3,9 +3,8 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Image } from 'react-native'
 
 import { COLORS, SIZES, SHADOWS, assets } from '../constants'
-import { SubInfo, LunchState, NFTTitle } from './SubInfo'
+import { LunchState, DetailTitle } from './SubInfo'
 import { RectButton, CircleButton } from './Button'
-import Title from './Title'
 
 const Card = ({ data }) => {
 	const navigation = useNavigation()
@@ -36,12 +35,10 @@ const Card = ({ data }) => {
 						borderTopRightRadius: SIZES.font
 					}}
 				/>
-
-				<CircleButton imgUrl={assets.heart} right={10} top={10} />
 			</View>
 
 			<View style={{ width: '100%', padding: SIZES.font }}>
-				<Title
+				<DetailTitle
 					title={data.name}
 					subTitle={data.date_utc}
 					titleSize={SIZES.large}

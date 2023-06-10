@@ -4,7 +4,9 @@ export const COLORS = {
 
 	white: '#FFF',
 	gray: '#74858C',
-	search: '#2EC4B6'
+	search: '#2EC4B6',
+	light: '#f6f6f6',
+	filter: '#F68657'
 }
 
 export const SIZES = {
