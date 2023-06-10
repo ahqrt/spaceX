@@ -6,8 +6,8 @@ import { Card, HomeHeader, FocusedStatusBar } from "../components";
 import { COLORS } from "../constants";
 import { getLaunches } from "../fetcher";
 import Search, { SearchContent } from "../components/Search/Search";
-
-
+import ActionButton from "react-native-action-button";
+import { AntDesign } from '@expo/vector-icons';
 const initilaQuery = {
   success: undefined,
   date_utc: {
@@ -27,12 +27,13 @@ const Home = () => {
   const [sortType, setSortType] = useState('desc')
   const hasMore = useRef(true)
   const [openModel, setOpenModel] = useState(false)
+  const flatlistRef = useRef<FlatList>(null)
 
   const searchContent = useRef<SearchContent>({
     startTime: undefined,
     endTime: undefined,
     lunchState: 'all',
-    sortType: 'asc',
+    sortType: 'desc',
   })
 
   const { data, isLoading, error } = useSwr(['/lunchers', page, sortType, query], () => getLaunches(page, sortType, query))
@@ -59,7 +60,6 @@ const Home = () => {
 
   const handleSearch = (value) => {
     allDatas.current = []
-    console.log('value', value, searchContent.current);
     setPage(1)
     let query = {}
     if (searchContent.current.startTime && searchContent.current.endTime) {
@@ -90,7 +90,6 @@ const Home = () => {
       setSortType(searchContent.current.sortType)
     }
 
-    console.log('query', query);
     setQuery(query)
   };
 
@@ -121,6 +120,7 @@ const Home = () => {
       <View style={{ flex: 1 }}>
         <View style={{ zIndex: 0 }}>
           <FlatList
+            ref={flatlistRef}
             data={allData}
             renderItem={({ item }) => <Card data={item} />}
             keyExtractor={(item) => item.id}
@@ -149,6 +149,12 @@ const Home = () => {
         </View>
       </View>
 
+      {/* float action button */}
+      <ActionButton
+        renderIcon={() => <AntDesign name="arrowup" size={24} color="black" />}
+        buttonColor="rgba(231,76,60,1)"
+        onPress={() => { flatlistRef.current.scrollToOffset({ animated: true, offset: 0 }) }}
+      />
 
       {/* filter model */}
       <Modal

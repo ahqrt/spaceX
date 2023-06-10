@@ -44,77 +44,79 @@ const Search: FC<SearchProps> = ({ initialState, onSearch }) => {
 
 
   return (
-    <View style={{ paddingTop: SIZES.font, width: '100%', height: 300, backgroundColor: COLORS.primary, marginTop: StatusBar.currentHeight }}>
-      {/* start time picker */}
-      <SearchItem title={'please chose the start time'} >
-        <NoStyleButton
-          text={startTime ? startTime.toLocaleDateString() : 'start time'}
-          minWidth={100}
-          fontSize={SIZES.font}
-          handlePress={() => {
-            DateTimePickerAndroid.open({
-              value: new Date(),
-              onChange: (event, date) => {
-                setStartTime(date)
-              }
-            })
-          }}
-        />
-      </SearchItem>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ paddingTop: SIZES.font, width: '100%', height: 300, backgroundColor: COLORS.primary, marginTop: StatusBar.currentHeight }}>
+        {/* start time picker */}
+        <SearchItem title={'please chose the start time'} >
+          <NoStyleButton
+            text={startTime ? startTime.toLocaleDateString() : 'start time'}
+            minWidth={100}
+            fontSize={SIZES.font}
+            handlePress={() => {
+              DateTimePickerAndroid.open({
+                value: new Date(),
+                onChange: (event, date) => {
+                  setStartTime(date)
+                }
+              })
+            }}
+          />
+        </SearchItem>
 
 
-      {/* end time picker */}
-      <SearchItem title={'please chose the end time'} >
-        <NoStyleButton
-          text={endTime ? endTime.toLocaleDateString() : 'end time'}
-          minWidth={100}
-          fontSize={SIZES.font}
-          handlePress={() => {
-            DateTimePickerAndroid.open({
-              value: new Date(),
-              onChange: (event, date) => {
-                setEndTime(date)
-              }
+        {/* end time picker */}
+        <SearchItem title={'please chose the end time'} >
+          <NoStyleButton
+            text={endTime ? endTime.toLocaleDateString() : 'end time'}
+            minWidth={100}
+            fontSize={SIZES.font}
+            handlePress={() => {
+              DateTimePickerAndroid.open({
+                value: new Date(),
+                onChange: (event, date) => {
+                  setEndTime(date)
+                }
+              })
+            }} />
+        </SearchItem>
+
+        {/* sort type picker */}
+        <SearchItem title={'please chose the sort type'} >
+          <CustomDropdown
+            data={sortType}
+            defaultValue={selectedSortType}
+            onSelect={(selectedItem, index) => {
+              setSelectedSortType(selectedItem)
+            }}
+          />
+        </SearchItem>
+
+        {/* lunch state picker */}
+        <SearchItem title={'please chose the lunch state'} >
+          <CustomDropdown
+            data={lunchState}
+            defaultValue={selectedLunchState}
+            onSelect={(selectedItem, index) => {
+              setSelectedLunchState(selectedItem)
+            }}
+          />
+
+        </SearchItem>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <RectButton text="reset" minWidth={100} fontSize={SIZES.font} backgroundColor={COLORS.filter} handlePress={reset} />
+          <RectButton text="confirm" minWidth={100} fontSize={SIZES.font} backgroundColor={COLORS.search} handlePress={() => {
+            onSearch({
+              startTime,
+              endTime,
+              lunchState: selectedLunchState,
+              sortType: selectedSortType
             })
           }} />
-      </SearchItem>
+        </View>
 
-      {/* sort type picker */}
-      <SearchItem title={'please chose the sort type'} >
-        <CustomDropdown
-          data={sortType}
-          defaultValue={selectedSortType}
-          onSelect={(selectedItem, index) => {
-            setSelectedSortType(selectedItem)
-          }}
-        />
-      </SearchItem>
-
-      {/* lunch state picker */}
-      <SearchItem title={'please chose the lunch state'} >
-        <CustomDropdown
-          data={lunchState}
-          defaultValue={selectedLunchState}
-          onSelect={(selectedItem, index) => {
-            setSelectedLunchState(selectedItem)
-          }}
-        />
-
-      </SearchItem>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <RectButton text="reset" minWidth={100} fontSize={SIZES.font} backgroundColor={COLORS.filter} handlePress={reset} />
-        <RectButton text="confirm" minWidth={100} fontSize={SIZES.font} backgroundColor={COLORS.search} handlePress={() => {
-          onSearch({
-            startTime,
-            endTime,
-            lunchState: selectedLunchState,
-            sortType: selectedSortType
-          })
-        }} />
       </View>
-
-    </View>
+    </SafeAreaView>
   )
 }
 

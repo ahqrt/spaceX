@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, Image, StatusBar, FlatList } from "react-native";
+import { View, SafeAreaView, Image, StatusBar } from "react-native";
 
-import { COLORS, SIZES, assets, SHADOWS, FONTS } from "../constants";
-import { CircleButton, RectButton, DetailsDesc, DetailsBid, FocusedStatusBar } from "../components";
+import { SIZES, assets } from "../constants";
+import { CircleButton, DetailsDesc, FocusedStatusBar } from "../components";
 import YoutubePlayer from "react-native-youtube-iframe";
 
 const DetailsHeader = ({ data, navigation }) => (
@@ -40,10 +39,6 @@ const DetailsHeader = ({ data, navigation }) => (
 const Details = ({ route, navigation }) => {
   const { data } = route.params;
 
-  useEffect(() => {
-    console.log('data.youtube_id', data);
-  }, [])
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar
@@ -51,14 +46,10 @@ const Details = ({ route, navigation }) => {
         backgroundColor="transparent"
         translucent={true}
       />
-
-
-      <React.Fragment>
-        <DetailsHeader data={data} navigation={navigation} />
-        <View style={{ padding: SIZES.font }}>
-          <DetailsDesc data={data} />
-        </View>
-      </React.Fragment>
+      <DetailsHeader data={data} navigation={navigation} />
+      <View style={{ padding: SIZES.font }}>
+        <DetailsDesc data={data} />
+      </View>
     </SafeAreaView>
   );
 };
