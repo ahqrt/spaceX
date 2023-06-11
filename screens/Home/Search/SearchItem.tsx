@@ -1,5 +1,5 @@
 import { View, Text } from "react-native"
-import { FONTS, SIZES, COLORS } from "../../constants"
+import { FONTS, SIZES, COLORS } from "../../../constants"
 import { FC } from "react"
 
 interface SearchItemProps {

@@ -3,7 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { Card, FocusedStatusBar } from "../../components";
 import { COLORS } from "../../constants";
-import Search from "./Search";
+import Search from "./Search/Search";
 import ActionButton from "react-native-action-button";
 import HomeHeader from "./HomeHeader";
 import useInit from "./hooks/useInit";

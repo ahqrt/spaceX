@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo, useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
-import { SearchContent } from "../Search";
+import { SearchContent } from "../Search/Search";
 import useSwr from "swr";
 import { getLaunches } from "../../../fetcher";
 
