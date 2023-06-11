@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "spacex-clone",
-    "slug": "spacex-clone",
+    "name": "spacex",
+    "slug": "spacex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
