@@ -1,13 +1,10 @@
 import { FC, useState } from "react";
-import { View, Text, TextInput, Image, StatusBar, SafeAreaView, TouchableOpacity } from "react-native";
-import { CircleButton, NoStyleButton, RectButton } from "../Button";
-import { SIZES, COLORS, assets, FONTS } from "../../constants";
-import { useNavigation } from "@react-navigation/native";
-import { FocusedStatusBar } from "..";
-import SelectDropdown from 'react-native-select-dropdown'
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import SearchItem from "./SearchItem";
-import CustomDropdown from "./CustomDropdown";
+import { View, StatusBar, SafeAreaView } from "react-native";
+import { NoStyleButton, RectButton } from "../../components/Button";
+import { SIZES, COLORS } from "../../constants";
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import SearchItem from "../../components/Search/SearchItem";
+import CustomDropdown from "../../components/Search/CustomDropdown";
 
 const sortType = ['asc', 'desc']
 const lunchState = ['all', 'success', 'failed']
@@ -40,8 +37,6 @@ const Search: FC<SearchProps> = ({ initialState, onSearch }) => {
     setSelectedSortType('desc')
     setSelectedLunchState('all')
   }
-
-
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

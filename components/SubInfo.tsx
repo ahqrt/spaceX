@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { View, Image, Text } from 'react-native'
 
-import { SIZES, FONTS, COLORS, SHADOWS, assets } from '../constants'
+import { SIZES, FONTS, COLORS, assets } from '../constants'
 
-export const DetailTitle = ({ title, subTitle, titleSize, subTitleSize }) => {
+interface DetailTitleProps {
+	title: string
+	subTitle: string
+	titleSize: number
+	subTitleSize: number
+}
+
+export const DetailTitle: FC<DetailTitleProps> = ({ title, subTitle, titleSize, subTitleSize }) => {
 	return (
 		<View>
 			<Text
@@ -28,7 +35,12 @@ export const DetailTitle = ({ title, subTitle, titleSize, subTitleSize }) => {
 	)
 }
 
-export const LunchState = ({ success }) => {
+
+interface LunchStateProps {
+	success: boolean
+}
+
+export const LunchState: FC<LunchStateProps> = ({ success }) => {
 	return (
 		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 			<Image source={assets.eth} resizeMode='contain' style={{ width: 20, height: 20, marginRight: 2 }} />

@@ -1,5 +1,6 @@
 import { View, Text } from "react-native"
 import { FONTS, SIZES, COLORS } from "../../constants"
+import { FC } from "react"
 
 interface SearchItemProps {
   title: string
@@ -7,7 +8,7 @@ interface SearchItemProps {
 }
 
 
-const SearchItem = ({ title, children }) => {
+const SearchItem: FC<SearchItemProps> = ({ title, children }) => {
 
   return (
     <View style={{ flexDirection: 'row', marginVertical: 5 }}>

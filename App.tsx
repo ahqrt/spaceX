@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useFonts } from "expo-font";
-import Home from './screens/Home';
+import Home from './screens/Home/Home';
 import Details from './screens/Detais';
-import Search from './components/Search/Search';
 
 const theme = {
   ...DefaultTheme,
@@ -42,12 +40,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

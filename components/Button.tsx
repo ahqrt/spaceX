@@ -1,5 +1,4 @@
 import { TouchableOpacity, Text, Image, GestureResponderEvent, StyleProp, ViewStyle, ImageSourcePropType, ColorValue } from 'react-native'
-
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants'
 import { FC } from 'react'
 

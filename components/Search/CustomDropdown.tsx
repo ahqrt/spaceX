@@ -2,8 +2,6 @@ import { FC } from "react"
 import SelectDropdown, { SelectDropdownProps } from "react-native-select-dropdown"
 import { SIZES, COLORS, FONTS } from "../../constants"
 
-
-
 const CustomDropdown: FC<SelectDropdownProps> = ({ data, onSelect, defaultValue }) => {
   return (
     <SelectDropdown

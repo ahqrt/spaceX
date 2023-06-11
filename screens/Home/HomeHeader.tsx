@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { View, Text, Image, TextInput } from "react-native";
+import { COLORS, FONTS, SIZES, assets } from "../../constants";
+import { RectButton } from "../../components/Button";
 
-import { COLORS, FONTS, SIZES, assets } from "../constants";
-import { RectButton } from "./Button";
-import { useNavigation } from "@react-navigation/native";
 
-const HomeHeader = ({ onSearch, onFilter }) => {
+interface HomeHeaderProps {
+  onSearch: (name: string) => void;
+  onFilter: () => void;
+}
+
+const HomeHeader: FC<HomeHeaderProps> = ({ onSearch, onFilter }) => {
   const [name, setName] = useState("");
-  const navigation = useNavigation()
 
   return (
     <View
